@@ -1,0 +1,21 @@
+# Godot 4
+.godot/
+/android/
+*.translation
+
+# Build output
+/build/
+/export/
+*.exe
+*.pck
+*.zip
+
+# Verification artifacts (regenerated, not source of truth)
+/artifacts/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local engine download
+.tools/
