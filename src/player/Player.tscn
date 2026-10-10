@@ -1,0 +1,49 @@
+[gd_scene load_steps=11 format=3 uid="uid://cplayer0001"]
+
+[ext_resource type="Script" path="res://src/player/player.gd" id="1_player"]
+[ext_resource type="Script" path="res://src/player/rig/blockout_rig.gd" id="2_rig"]
+[ext_resource type="Script" path="res://src/core/state_machine/state_machine.gd" id="3_sm"]
+[ext_resource type="Script" path="res://src/player/states/idle_state.gd" id="4_idle"]
+[ext_resource type="Script" path="res://src/player/states/move_state.gd" id="5_move"]
+[ext_resource type="Script" path="res://src/player/states/jump_state.gd" id="6_jump"]
+[ext_resource type="Script" path="res://src/player/states/fall_state.gd" id="7_fall"]
+[ext_resource type="Script" path="res://src/player/states/land_state.gd" id="8_land"]
+[ext_resource type="Script" path="res://src/player/states/dodge_state.gd" id="9_dodge"]
+
+[sub_resource type="CapsuleShape3D" id="Capsule_1"]
+radius = 0.32
+height = 1.76
+
+[node name="Player" type="CharacterBody3D"]
+floor_snap_length = 0.35
+floor_max_angle = 0.9
+script = ExtResource("1_player")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88, 0)
+shape = SubResource("Capsule_1")
+
+[node name="Rig" type="Node3D" parent="."]
+script = ExtResource("2_rig")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("3_sm")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_idle")
+
+[node name="Move" type="Node" parent="StateMachine"]
+script = ExtResource("5_move")
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("6_jump")
+
+[node name="Fall" type="Node" parent="StateMachine"]
+script = ExtResource("7_fall")
+
+[node name="Land" type="Node" parent="StateMachine"]
+script = ExtResource("8_land")
+
+[node name="Dodge" type="Node" parent="StateMachine"]
+script = ExtResource("9_dodge")

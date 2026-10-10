@@ -1,0 +1,4 @@
+{
+  "_comment": "Hold right through a full acceleration into a sustained run. Judges the gait.",
+  "events": [{ "frame": 6, "press": ["move_right"] }]
+}

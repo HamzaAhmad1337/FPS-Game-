@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Run a scene headlessly, drive scripted input, and write a contact sheet.
 #
-#   tools/verify/run_capture.sh <scene> <name> [frames] [every] [input_json]
+#   tools/verify/run_capture.sh <scene> <name> [frames] [every] [input_json] [WxH]
 #
 # Exits non-zero if Godot logged any error, or if no frames were captured.
 # This is the gate: a feature is not done until this passes and the sheet has
@@ -16,6 +16,9 @@ NAME="${2:?missing capture name}"
 FRAMES="${3:-120}"
 EVERY="${4:-6}"
 INPUTS="${5:-}"
+RES="${6:-480x270}"
+START="${7:-0}"
+COLS="${8:-6}"
 
 OUT_DIR="$ROOT/artifacts/$NAME"
 SHEET="$OUT_DIR/sheet.png"
@@ -33,6 +36,8 @@ ARGS=(
   --every="$EVERY"
   --out="$SHEET"
   --dump-dir="$OUT_DIR/frames"
+  --start="$START"
+  --cols="$COLS"
 )
 [[ -n "$INPUTS" ]] && ARGS+=(--inputs="$INPUTS")
 
@@ -45,7 +50,7 @@ timeout 300 xvfb-run -a "$GODOT" \
   --rendering-driver opengl3 \
   --audio-driver Dummy \
   --fixed-fps 60 \
-  --resolution 480x270 \
+  --resolution "$RES" \
   res://tools/verify/CaptureHarness.tscn \
   -- "${ARGS[@]}" >"$LOG" 2>&1
 RC=$?

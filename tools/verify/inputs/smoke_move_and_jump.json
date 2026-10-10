@@ -1,8 +1,0 @@
-{
-  "_comment": "Hold right, then jump mid-run, then stop. Proves scripted input reaches gameplay.",
-  "events": [
-    { "frame": 10, "press": ["move_right"] },
-    { "frame": 45, "tap": ["jump"], "tap_frames": 3 },
-    { "frame": 95, "release": ["move_right"] }
-  ]
-}

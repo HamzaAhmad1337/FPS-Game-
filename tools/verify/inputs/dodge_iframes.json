@@ -1,0 +1,6 @@
+{
+  "_comment": "Standing dodge. The emissive flash marks the i-frame window (frames 3-16 of the roll).",
+  "events": [
+    { "frame": 20, "tap": ["dodge"], "tap_frames": 2 }
+  ]
+}

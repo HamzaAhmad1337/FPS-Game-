@@ -1,0 +1,8 @@
+{
+  "_comment": "Run, jump mid-stride, land. Judges air pose, arc and landing squash.",
+  "events": [
+    { "frame": 6, "press": ["move_right"] },
+    { "frame": 40, "tap": ["jump"], "tap_frames": 10 },
+    { "frame": 105, "release": ["move_right"] }
+  ]
+}

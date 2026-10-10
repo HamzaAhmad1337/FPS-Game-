@@ -396,8 +396,8 @@ whose deliverable is "code that might work".
 | Phase | Deliverable | Acceptance criteria | Est. |
 |---|---|---|---|
 | **P0** | Research + this document + verified toolchain | You approve the plan | **DONE** |
-| **P1** | Project skeleton, verification harness, CI script | `verify.sh` outputs a contact sheet of a running scene | 1 |
-| **P2** | Movement + camera: walk, run, jump, fall, land, dodge, 2.5D depth, shadows | Screenshot strip shows a readable run cycle and a dodge with i-frame window | 1-2 |
+| **P1** | Project skeleton, verification harness, CI script | `verify.sh` outputs a contact sheet of a running scene | **DONE** |
+| **P2** | Movement + camera: walk, run, jump, fall, land, dodge, 2.5D depth, shadows | Screenshot strip shows a readable run cycle and a dodge with i-frame window | **DONE** |
 | **P3** | Combat core: state machine, MoveData resources, hitbox/hurtbox, input buffer, cancel windows, hitstop, damage | Ground 3-hit combo lands on a training dummy, each hit visibly freezes; unit tests green | 2 |
 | **P4** | Enemy #1 (Grunt): AI states, telegraph, poise, stagger, hitstun, knockdown, get-up, aggro tokens | A real fight against 3 Grunts is playable and winnable | 2 |
 | **P5** | Air combat: launcher, juggle decay, air combo, enemy step, gun, dive slam | A launcher → 4-hit air combo → slam is performable and captured on screenshots | 2 |

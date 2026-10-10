@@ -23,15 +23,20 @@ echo "project reimported"
 step "logic tests"
 bash "$ROOT/tools/test/run_tests.sh" || FAILED=1
 
-# scene | name | frames | every | input script
+# scene | name | frames | every | input script | resolution | start frame | cols
+# Ranges are tuned to frame the moment each capture is meant to prove, rather
+# than dumping a whole run and downscaling it into something unreadable.
 CAPTURES=(
-  "res://scenes/smoke/SmokeTest.tscn|smoke|120|6|res://tools/verify/inputs/smoke_move_and_jump.json"
+  "res://levels/Arena01.tscn|gait|92|3|res://tools/verify/inputs/run_cycle.json|560x420|62|5"
+  "res://levels/Arena01.tscn|jump_arc|104|4|res://tools/verify/inputs/jump_arc.json|480x360|34|6"
+  "res://levels/Arena01.tscn|dodge_iframes|52|2|res://tools/verify/inputs/dodge_iframes.json|480x360|20|6"
 )
 
 step "visual captures"
 for entry in "${CAPTURES[@]}"; do
-  IFS='|' read -r scene name frames every inputs <<<"$entry"
-  bash "$ROOT/tools/verify/run_capture.sh" "$scene" "$name" "$frames" "$every" "$inputs" || FAILED=1
+  IFS='|' read -r scene name frames every inputs res start cols <<<"$entry"
+  bash "$ROOT/tools/verify/run_capture.sh" \
+    "$scene" "$name" "$frames" "$every" "$inputs" "$res" "$start" "$cols" || FAILED=1
 done
 
 step "result"

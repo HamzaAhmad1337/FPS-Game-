@@ -1,0 +1,92 @@
+[gd_scene load_steps=12 format=3 uid="uid://carena0001"]
+
+[ext_resource type="PackedScene" uid="uid://cplayer0001" path="res://src/player/Player.tscn" id="1_player"]
+[ext_resource type="Script" path="res://src/camera/combat_camera.gd" id="2_cam"]
+
+[sub_resource type="ProceduralSkyMaterial" id="Sky_1"]
+sky_top_color = Color(0.09, 0.1, 0.17, 1)
+sky_horizon_color = Color(0.42, 0.3, 0.3, 1)
+ground_bottom_color = Color(0.05, 0.05, 0.07, 1)
+ground_horizon_color = Color(0.42, 0.3, 0.3, 1)
+
+[sub_resource type="Sky" id="Sky_2"]
+sky_material = SubResource("Sky_1")
+
+[sub_resource type="Environment" id="Env_1"]
+background_mode = 2
+sky = SubResource("Sky_2")
+ambient_light_source = 3
+ambient_light_color = Color(0.46, 0.5, 0.66, 1)
+ambient_light_energy = 0.75
+tonemap_mode = 2
+
+[sub_resource type="BoxShape3D" id="FloorShape_1"]
+size = Vector3(80, 1, 10)
+
+[sub_resource type="BoxMesh" id="FloorMesh_1"]
+size = Vector3(80, 1, 10)
+
+[sub_resource type="StandardMaterial3D" id="FloorMat_1"]
+albedo_color = Color(0.26, 0.27, 0.31, 1)
+roughness = 0.88
+
+[sub_resource type="BoxMesh" id="StripeMesh_1"]
+size = Vector3(80, 0.04, 0.12)
+
+[sub_resource type="StandardMaterial3D" id="StripeMat_1"]
+albedo_color = Color(0.55, 0.3, 0.26, 1)
+roughness = 0.7
+
+[sub_resource type="BoxMesh" id="PostMesh_1"]
+size = Vector3(0.3, 2.2, 0.3)
+
+[node name="Arena01" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env_1")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.77, 0.4, -0.5, 0, 0.78, 0.63, 0.64, -0.48, 0.6, 0, 10, 0)
+light_energy = 1.45
+shadow_enabled = true
+directional_shadow_max_distance = 40.0
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="FloorCollision" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("FloorShape_1")
+
+[node name="FloorMesh" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("FloorMesh_1")
+surface_material_override/0 = SubResource("FloorMat_1")
+
+[node name="DepthLineFar" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, -3.6)
+mesh = SubResource("StripeMesh_1")
+surface_material_override/0 = SubResource("StripeMat_1")
+
+[node name="DepthLineNear" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 3.6)
+mesh = SubResource("StripeMesh_1")
+surface_material_override/0 = SubResource("StripeMat_1")
+
+[node name="PostA" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.1, -4.6)
+mesh = SubResource("PostMesh_1")
+
+[node name="PostB" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -4.6)
+mesh = SubResource("PostMesh_1")
+
+[node name="PostC" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.1, -4.6)
+mesh = SubResource("PostMesh_1")
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.1, 0)
+
+[node name="CombatCamera" type="Camera3D" parent="."]
+fov = 50.0
+script = ExtResource("2_cam")
+target_path = NodePath("../Player")

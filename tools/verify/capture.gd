@@ -24,6 +24,7 @@ var _total_frames := 120
 var _every := 6
 var _cols := DEFAULT_COLS
 var _settle_frames := 2
+var _start_frame := 0
 
 var _events: Array = []
 var _auto_release: Dictionary = {}   # action -> frame at which to release
@@ -73,6 +74,7 @@ func _parse_args() -> void:
 			"every": _every = maxi(1, int(val))
 			"cols": _cols = maxi(1, int(val))
 			"settle": _settle_frames = int(val)
+			"start": _start_frame = int(val)
 			_: push_warning("[capture] unknown arg: %s" % arg)
 
 
@@ -137,7 +139,8 @@ func _on_frame_post_draw() -> void:
 	if _finished:
 		return
 	# Give the renderer a couple of frames before trusting the backbuffer.
-	if _frame >= _settle_frames and (_frame - _settle_frames) % _every == 0:
+	var first := maxi(_settle_frames, _start_frame)
+	if _frame >= first and (_frame - first) % _every == 0:
 		var img := get_viewport().get_texture().get_image()
 		if img != null:
 			img.convert(Image.FORMAT_RGBA8)
